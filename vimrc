@@ -126,7 +126,8 @@ map <M-F2> :tabnew<CR>
 map <F3> :NERDTree<CR> 
 "打开树状文件目录  
 "ckear highlight
-map <F6> :noh<CR>
+"map <F6> :noh<CR>
+nmap <F6> :TagbarToggle<CR>
 map <C-F3> \be  
 "map <F7> :call Gitdiff()<CR>
 "func! Gitdiff()
