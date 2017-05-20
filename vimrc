@@ -119,7 +119,7 @@ map <F9> zc
 "去空行  
 nnoremap <F2> :g/^\s*$/d<CR> 
 "比较文件  
-map <F4> :vert diffsplit 
+map <F4> 0I//<ESC> 
 "新建标签  
 map <M-F2> :tabnew<CR>  
 "列出当前目录文件  
@@ -135,19 +135,8 @@ map <C-F3> \be
 "endfunc
 
 "complie bootimage
-map <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
-"		exec "!a=$(pwd|cut -d '/' -f7)"
-"		exec "!echo $a"
-		exec "! cd /data/nishome/td/weigeng.huang/workspace/global_project/$(pwd|cut -d '/' -f8);makeTcl -t bootimage"
-"		exec "! ./makeTcl -t bootimage"
-"		exec "!c=$b$a/makeTcl"
-"		exec "!echo $c"
-"		exec "!$c -t bootimage"
-	endif
-endfunc
+map <F5> 0d//<esc> 
+"func! CompileRunGcc()
 "	exec "w"
 "	if &filetype == 'c'
 "		exec "!g++ % -o %<"
