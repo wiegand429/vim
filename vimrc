@@ -1,53 +1,32 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"set shortmess=atI   " 启动的时候不显示那个援助乌干达儿童的提示  
-"winpos 5 5          " 设定窗口位置  
-"set lines=40 columns=155    " 设定窗口大小  
-"set nu              " 显示行号  
 set go=             " 不要图形按钮  
-"color asmanian2     " 设置背景主题  
 set guifont=Courier_New:h10:cANSI   " 设置字体  
 syntax on           " 语法高亮  
-autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
-autocmd InsertEnter * se cul    " 用浅色高亮当前行  
-"set ruler           " 显示标尺  
 set showcmd         " 输入的命令显示出来，看的清楚些  
-"set cmdheight=1     " 命令行（在状态行下）的高度，设置为1  
-"set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
-"set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离  
-set novisualbell    " 不要闪烁(不明白)  
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容  
 set laststatus=1    " 启动显示状态行(1),总是显示状态行(2)  
 set foldenable      " 允许折叠  
 set foldmethod=manual   " 手动折叠  
-set background=dark "背景使用黑色 
-set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  
-" 显示中文帮助
-"缩进格式
-set cindent
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
-set autoindent
-"|
-":set list lcs=tab:\¦\ 
-if version >= 603
-	set helplang=cn
-	set encoding=utf-8
-endif
-" 设置配色方案
-"colorscheme murphy
-"字体 
-"if (has("gui_running")) 
-"   set guifont=Bitstream\ Vera\ Sans\ Mono\ 10 
-"endif 
 
-set t_Co=256
-
-"set background=dark
-
+filetype plugin on
+let g:pydiction_location = '~/.vim/tools/pydiction/complete-dict'
+let g:pydiction_menu_height = 3
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+Bundle 'gmarik/vundle'
+Bundle 'majutsushi/tagbar'
+Bundle 'scrooloose/nerdtree'
+"Bundle 'tomasr/molokai' 
+Bundle 'suan/vim-instant-markdown'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'vim-airline/vim-airline'
+let g:airline#extensions#tabline#enabled = 1
 "colorscheme molokai
+syntax enable
+set background=dark
+colorscheme solarized
 
 set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936
 set termencoding=utf-8
@@ -101,8 +80,6 @@ nmap <leader>f :find<cr>
 nmap <leader>q :q!<cr>
 map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " 映射全选+复制 ctrl+a
-map <C-A> ggVGY
-map! <C-A> <Esc>ggVGY
 map <F12> gg=G
 
 " 选中状态下 Ctrl+c 复制
@@ -136,8 +113,19 @@ map <C-F3> \be
 "endfunc
 
 "complie bootimage
-map <F5> 0d//<esc> 
-"func! CompileRunGcc()
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+	exec "w"
+	if &filetype == 'c'
+"		exec "!a=$(pwd|cut -d '/' -f7)"
+"		exec "!echo $a"
+		exec "! cd /data/nishome/td/weigeng.huang/workspace/global_project/$(pwd|cut -d '/' -f8);makeTcl -t bootimage"
+"		exec "! ./makeTcl -t bootimage"
+"		exec "!c=$b$a/makeTcl"
+"		exec "!echo $c"
+"		exec "!$c -t bootimage"
+	endif
+endfunc
 "	exec "w"
 "	if &filetype == 'c'
 "		exec "!g++ % -o %<"
@@ -169,8 +157,6 @@ set autoread
 
 "代码补全 
 set completeopt=preview,menu 
-"允许插件  
-filetype plugin on
 "共享剪贴板  
 set clipboard+=unnamed 
 "从不备份  
@@ -190,10 +176,6 @@ set foldcolumn=0
 set foldmethod=indent 
 set foldlevel=3 
 set foldenable              " 开始折叠
-" 不要使用vi的键盘模式，而是vim自己的
-set nocompatible
-" 语法高亮
-set syntax=on
 " 去掉输入错误的提示声音
 set noeb
 " 在处理未保存或只读文件的时候，弹出确认
@@ -215,7 +197,6 @@ set number
 " 历史记录数
 set history=1000
 "禁止生成临时文件
-set nobackup
 set noswapfile
 "搜索忽略大小写
 set ignorecase
@@ -273,15 +254,6 @@ set scrolloff=3
 set smartindent
 " 高亮显示普通txt文件（需要txt.vim脚本）
 au BufRead,BufNewFile *  setfiletype txt
-"自动补全
-"":inoremap ( ()<ESC>i
-"":inoremap ) <c-r>=ClosePair(')')<CR>
-"":inoremap { {<CR>}<ESC>O
-"":inoremap } <c-r>=ClosePair('}')<CR>
-"":inoremap [ []<ESC>i
-"":inoremap ] <c-r>=ClosePair(']')<CR>
-"":inoremap " ""<ESC>i
-"":inoremap ' ''<ESC>i
 function! ClosePair(char)
 	if getline('.')[col('.') - 1] == a:char
 		return "\<Right>"
@@ -295,14 +267,13 @@ set completeopt=longest,menu
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTags的设定  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let Tlist_Sort_Type = "name"    " 按照名称排序  
-let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
-let Tlist_Compart_Format = 1    " 压缩方式  
-let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
-let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
-let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
-autocmd FileType java set tags+=D:\tools\java\tags  
-"autocmd FileType h,cpp,cc,c set tags+=D:\tools\cpp\tags  
+"let Tlist_Sort_Type = "name"    " 按照名称排序  
+"let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
+"let Tlist_Compart_Format = 1    " 压缩方式  
+"let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
+"let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
+"let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
+""autocmd FileType h,cpp,cc,c set tags+=D:\tools\cpp\tags  
 "let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
 "设置tags  
 set tags=tags  
