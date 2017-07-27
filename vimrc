@@ -22,7 +22,10 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'suan/vim-instant-markdown'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'vim-airline/vim-airline'
+Bundle 'Valloric/YouCompleteMe'
 let g:airline#extensions#tabline#enabled = 1
+let g:ycm_server_python_interpreter='/usr/bin/python'
+let g:ycm_global_ycm_extra_conf='~/.vim/.ycm_extra_conf.py'
 "colorscheme molokai
 syntax enable
 set background=dark
@@ -86,7 +89,7 @@ map <F12> gg=G
 "map <C-C> yy
 "map <C-V> p
 map <C-c> "+y
-map <C-v> "+p
+map <C-p> "+p
 map <C-X> cc
 map <C-z> u
 map <C-f> /
