@@ -98,7 +98,7 @@ map <F9> zc
 ""vmap <leader>v p
 "去空行  
 nnoremap <F2> :g/^\s*$/d<CR> 
-"比较文件  
+"commend
 map <F4> 0I//<ESC> 
 "新建标签  
 map <M-F2> :tabnew<CR>  
@@ -114,21 +114,29 @@ map <C-F3> \be
 "	exec "w"
 "	exec "!git diff ./"
 "endfunc
-
+map <F5> :!cscope -Rbkq <CR>:cscope add ./cscope.out<CR>
+nmap <C-@>s :cscope find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>g :cscope find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>c :cscope find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>t :cscope find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>e :cscope find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>f :cscope find f <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>i :cscope find i ^<C-R>=expand("<cword>")<CR>$<CR>
+nmap <C-@>d :cscope find d <C-R>=expand("<cword>")<CR><CR>
 "complie bootimage
-map <F5> :call CompileRunGcc()<CR>
-func! CompileRunGcc()
-	exec "w"
-	if &filetype == 'c'
+"map <F5> :call CompileRunGcc()<CR>
+"func! CompileRunGcc()
+"	exec "w"
+"	if &filetype == 'c'
 "		exec "!a=$(pwd|cut -d '/' -f7)"
 "		exec "!echo $a"
-		exec "! cd /data/nishome/td/weigeng.huang/workspace/global_project/$(pwd|cut -d '/' -f8);makeTcl -t bootimage"
+"		exec "! cd /data/nishome/td/weigeng.huang/workspace/global_project/$(pwd|cut -d '/' -f8);makeTcl -t bootimage"
 "		exec "! ./makeTcl -t bootimage"
 "		exec "!c=$b$a/makeTcl"
 "		exec "!echo $c"
 "		exec "!$c -t bootimage"
-	endif
-endfunc
+	"endif
+"endfunc
 "	exec "w"
 "	if &filetype == 'c'
 "		exec "!g++ % -o %<"
